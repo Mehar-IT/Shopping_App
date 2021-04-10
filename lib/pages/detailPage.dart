@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cartModel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+// import 'package:new_app/lib/models/catalog.dart';
+import 'package:flutter_application_1/models/catalog.dart';
 
 class DetailPage extends StatelessWidget {
-  final item;
+  final Products item;
 
   const DetailPage({Key? key, required this.item}) : super(key: key);
 

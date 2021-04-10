@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cartModel.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/models/catalog.dart';
 
 class MyCart extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class MyCart extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
-                  child: Provider.of<CartModel>(context)
+                  child: Provider.of<CartModel>(context, listen: true)
                           .selectedProducts
                           .isEmpty
                       ? Center(
@@ -28,10 +29,10 @@ class MyCart extends StatelessWidget {
                               TextStyle(color: Theme.of(context).accentColor),
                           textScaleFactor: 2.0,
                         ))
-                      : _CartList(
-                          item: Provider.of<CartModel>(context, listen: true)
-                              .selectedProducts,
-                        ),
+                      : Consumer<CartModel>(
+                          builder: (context, item, child) => _CartList(
+                                item: item.selectedProducts,
+                              )),
                 ),
               ),
             ),
@@ -75,34 +76,34 @@ class _Cartbutton extends StatelessWidget {
 }
 
 class _CartList extends StatelessWidget {
-  final item;
+  final List<Products>? item;
 
-  const _CartList({Key? key, this.item}) : super(key: key);
+  const _CartList({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: ListView.builder(
             shrinkWrap: true,
-            itemCount: item.length,
+            itemCount: item!.length,
             itemBuilder: (context, index) => ListTile(
                 leading: Container(
                   decoration: BoxDecoration(
                       color: Color(int.parse(
-                          item[index].color.replaceFirst("#", "0xff"))),
+                          item![index].color.replaceFirst("#", "0xff"))),
                       shape: BoxShape.circle),
                   height: 30,
                   width: 30,
                 ),
-                subtitle: Text('${item[index].desc}'),
+                subtitle: Text('${item![index].desc}'),
                 trailing: IconButton(
                     onPressed: () {
                       Provider.of<CartModel>(context, listen: false)
-                          .delete(item[index]);
+                          .delete(item![index]);
                     },
                     icon: Icon(CupertinoIcons.delete)),
                 title: Text(
-                  '${item[index].name}',
+                  '${item![index].name}',
                 ))));
   }
 }
