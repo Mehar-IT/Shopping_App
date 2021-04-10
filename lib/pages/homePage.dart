@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/pages/cart.dart';
 import 'package:flutter_application_1/pages/detailPage.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_1/models/catalog.dart';
 
@@ -17,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var item;
+  List<Products>? item;
 
   @override
   void initState() {
@@ -27,10 +25,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadData() async {
-    var jsonData = await rootBundle.loadString('assets/files/catalog.json');
+    String jsonData = await rootBundle.loadString('assets/files/catalog.json');
 
-    var decodedData = jsonDecode(jsonData);
-    var data = CatalogModel.fromJson(decodedData);
+    Map<String, dynamic> decodedData = jsonDecode(jsonData);
+    CatalogModel data = CatalogModel.fromJson(decodedData);
+
     item = data.products;
 
     setState(() {});
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 }
 
 class TestList extends StatelessWidget {
-  final item;
+  final List<Products>? item;
 
   const TestList({Key? key, this.item}) : super(key: key);
 
@@ -72,14 +71,11 @@ class TestList extends StatelessWidget {
                 'Catalog App',
                 style: GoogleFonts.balooDa(
                   fontSize: 30,
-                  //  color:
-                  //  Theme.of(context).accentColor
                 ),
               ),
               Text(
                 'Treanding Products',
                 textScaleFactor: 1.2,
-                // style: TextStyle(color: Color(0xFF403b58)),
               ),
               SizedBox(height: 20),
               Expanded(
@@ -90,7 +86,7 @@ class TestList extends StatelessWidget {
                     child: Container(
                       child: (item != null)
                           ? ListView.builder(
-                              itemCount: item.length,
+                              itemCount: item!.length,
                               itemBuilder: (context, index) {
                                 return Card(
                                     child: Container(
@@ -113,11 +109,11 @@ class TestList extends StatelessWidget {
                                                           MaterialPageRoute(
                                                               builder: (context) =>
                                                                   DetailPage(
-                                                                      item: item[
+                                                                      item: item![
                                                                           index])));
                                                     },
                                                     child: Hero(
-                                                      tag: Key(item[index]
+                                                      tag: Key(item![index]
                                                           .id
                                                           .toString()),
                                                       child: ClipRRect(
@@ -130,7 +126,7 @@ class TestList extends StatelessWidget {
                                                                   .canvasColor,
                                                           width: 150,
                                                           child: Image.network(
-                                                            item[index].image,
+                                                            item![index].image,
                                                           ),
                                                         ),
                                                       ),
@@ -147,7 +143,7 @@ class TestList extends StatelessWidget {
                                           children: [
                                             SizedBox(height: 20),
                                             Text(
-                                              item[index].name,
+                                              item![index].name,
                                               style: GoogleFonts.balooDa(
                                                 fontSize: 18,
                                                 // color: Theme.of(context)
@@ -156,13 +152,13 @@ class TestList extends StatelessWidget {
                                             ),
                                             Expanded(
                                                 child: Text(
-                                                    '${item[index].desc}')),
+                                                    '${item![index].desc}')),
                                             ButtonBar(
                                               alignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Text(
-                                                  '\$${item[index].price}',
+                                                  '\$${item![index].price}',
                                                   textScaleFactor: 1.3,
                                                   style: GoogleFonts.redressed(
                                                       color: Theme.of(context)
@@ -171,7 +167,7 @@ class TestList extends StatelessWidget {
                                                 Container(
                                                   decoration: BoxDecoration(
                                                       color: Color(int.parse(
-                                                          item[index]
+                                                          item![index]
                                                               .color
                                                               .replaceFirst("#",
                                                                   "0xff"))),

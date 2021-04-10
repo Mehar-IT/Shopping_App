@@ -2,7 +2,7 @@ class CatalogModel {
   List<Products>? _products;
 
   CatalogModel({List<Products>? products}) {
-    this._products = products!;
+    this._products = products;
   }
 
   List<Products> get products => _products!;
