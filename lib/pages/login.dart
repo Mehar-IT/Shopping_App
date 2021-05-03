@@ -8,7 +8,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String name = '';
-  bool button = false;
+  bool button = false, _icon = true;
   final _formkey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async {
@@ -62,6 +62,7 @@ class _LoginState extends State<Login> {
                             });
                           },
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
                             labelText: 'Username',
                             hintText: 'Enter user name',
                           ),
@@ -73,8 +74,17 @@ class _LoginState extends State<Login> {
                           },
                         ),
                         TextFormField(
-                          obscureText: true,
+                          obscureText: _icon,
                           decoration: InputDecoration(
+                            prefixIcon: IconButton(
+                                icon: Icon(_icon
+                                    ? Icons.remove_red_eye
+                                    : Icons.security_rounded),
+                                onPressed: () {
+                                  setState(() {
+                                    _icon = !_icon;
+                                  });
+                                }),
                             labelText: 'Passward',
                             hintText: 'Enter user Passward',
                           ),
@@ -90,8 +100,9 @@ class _LoginState extends State<Login> {
                         SizedBox(height: 20.0),
                         Material(
                           color: Colors.red,
-                          borderRadius: BorderRadius.circular(button ? 50 : 8),
+                          borderRadius: BorderRadius.circular(50),
                           child: InkWell(
+                            borderRadius: BorderRadius.circular(50),
                             splashColor: Colors.cyan,
                             onTap: () => moveToHome(context),
                             child: AnimatedContainer(
