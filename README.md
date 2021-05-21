@@ -12,9 +12,9 @@ Provider packege used
 
 [Hamza Tarique](https://github.com/Mehar-IT) created this application with pure flutter internal frameworks no 3rd party plugin or packede is used
 
-
-This Application is created by [Hamza Tarique](https://github.com/Mehar-IT) 
 Lecture attend from [Codpur](https://www.youtube.com/watch?v=4JMnuaDjP8E&list=PLrjrqTcKCnhTXI2GyPkaQF47inLp6LoIC)
+
+[Download link for Android](https://drive.google.com/file/d/1DwuXnVh1TLGtoKbNeJq-UWhExpN2fVnV/view?usp=sharing)
 
 |                                                                     |                                                                     |
 |---------------------------------------------------------------------|---------------------------------------------------------------------|
